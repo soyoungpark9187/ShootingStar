@@ -58,9 +58,19 @@ public class BulletScript : MonoBehaviour {
 			//Destroy bullet object
 			Destroy(gameObject);
 		}
-			
-		//If bullet collides with "ExplosiveBarrel" tag
-		if (collision.transform.tag == "ExplosiveBarrel") 
+
+        //If bullet collides with "Star" tag
+        if (collision.transform.tag == "Star")
+        {
+            //Toggle "isHit" on target object
+            collision.transform.gameObject.GetComponent
+                <Make_Star>().isHit = true;
+            //Destroy bullet object
+            Destroy(gameObject);
+        }
+
+        //If bullet collides with "ExplosiveBarrel" tag
+        if (collision.transform.tag == "ExplosiveBarrel") 
 		{
 			//Toggle "explode" on explosive barrel object
 			collision.transform.gameObject.GetComponent
