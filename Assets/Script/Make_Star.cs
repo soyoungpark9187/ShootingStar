@@ -16,6 +16,19 @@ public class Make_Star : MonoBehaviour
     public GameObject Star;
     public int make_num;
 
+    public float size;
+    public int score;
+
+    private void Start()
+    {
+        score = 30; // 10 ~ 50
+        float randomV = Random.Range(-0.99f, 1.0f);
+        size = randomV;
+        transform.localScale += new Vector3(randomV,randomV,randomV);
+
+        float tmp_score = score + (-randomV * 20);
+        score = (int)tmp_score;
+    }
     private void Update()
     {
         if(routineStarted == false)
@@ -32,6 +45,8 @@ public class Make_Star : MonoBehaviour
         //If the target is hit
         if (isHit == true)
         {
+
+            GameObject.Find("arms_assault_rifle_01").GetComponent<AutomaticGunScriptLPFP>().currentScore += score;
             Destroy(gameObject);
 
 

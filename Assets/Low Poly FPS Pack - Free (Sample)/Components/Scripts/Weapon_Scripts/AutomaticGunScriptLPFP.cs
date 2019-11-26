@@ -73,6 +73,9 @@ public class AutomaticGunScriptLPFP : MonoBehaviour {
 	//Check if out of ammo
 	private bool outOfAmmo;
 
+    public int currentScore;
+
+
 	[Header("Bullet Settings")]
 	//Bullet
 	[Tooltip("How much force is applied to the bullet when shooting.")]
@@ -113,13 +116,19 @@ public class AutomaticGunScriptLPFP : MonoBehaviour {
 	//Audio source used for shoot sound
 	public AudioSource shootAudioSource;
 
-	[Header("UI Components")]
+    [Header("Timer Setting")]
+
+    public float timer;
+
+    [Header("UI Components")]
 	public Text timescaleText;
 	public Text currentWeaponText;
 	public Text currentAmmoText;
 	public Text totalAmmoText;
+    public Text currentScoreText;
+    public Text gameTimerText;
 
-	[System.Serializable]
+    [System.Serializable]
 	public class prefabs
 	{  
 		[Header("Prefabs")]
@@ -169,7 +178,7 @@ public class AutomaticGunScriptLPFP : MonoBehaviour {
 	}
 
 	private void Start () {
-		
+        currentScore = 0;
 		//Save the weapon name
 		storedWeaponName = weaponName;
 		//Get weapon name from string to text
@@ -177,6 +186,8 @@ public class AutomaticGunScriptLPFP : MonoBehaviour {
 		//Set total ammo text from total ammo int
 		totalAmmoText.text = ammo.ToString();
 
+        currentScoreText.text = currentScore.ToString();
+        
 		//Weapon sway
 		initialSwayPosition = transform.localPosition;
 
@@ -490,9 +501,17 @@ public class AutomaticGunScriptLPFP : MonoBehaviour {
 		{
 			anim.SetBool ("Run", false);
 		}
-	}
 
-	private IEnumerator GrenadeSpawnDelay () {
+        //current score setting
+        currentScoreText.text = currentScore.ToString();
+
+        // timer countdown
+        timer -= Time.deltaTime;
+        float tmp = Mathf.Round(timer);
+        gameTimerText.text = tmp.ToString();
+    }
+    
+    private IEnumerator GrenadeSpawnDelay () {
 		
 		//Wait for set amount of time before spawning grenade
 		yield return new WaitForSeconds (grenadeSpawnDelay);

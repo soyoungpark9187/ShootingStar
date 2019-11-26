@@ -65,6 +65,8 @@ public class BulletScript : MonoBehaviour {
             //Toggle "isHit" on target object
             collision.transform.gameObject.GetComponent
                 <Make_Star>().isHit = true;
+
+            
             //Destroy bullet object
             Destroy(gameObject);
         }
