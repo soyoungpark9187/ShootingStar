@@ -80,7 +80,8 @@ public class BulletScript : MonoBehaviour {
 			//Destroy bullet object
 			Destroy(gameObject);
 		}
-	}
+        
+    }
 
 	private IEnumerator DestroyTimer () 
 	{

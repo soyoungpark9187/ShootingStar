@@ -73,7 +73,6 @@ public class AutomaticGunScriptLPFP : MonoBehaviour {
 	//Check if out of ammo
 	private bool outOfAmmo;
 
-    public int currentScore;
 
 
 	[Header("Bullet Settings")]
@@ -128,6 +127,9 @@ public class AutomaticGunScriptLPFP : MonoBehaviour {
     public Text currentScoreText;
     public Text gameTimerText;
 
+
+    public int currentScore;
+    public int ClearScore;
     [System.Serializable]
 	public class prefabs
 	{  
@@ -193,9 +195,11 @@ public class AutomaticGunScriptLPFP : MonoBehaviour {
 
 		//Set the shoot sound to audio source
 		shootAudioSource.clip = SoundClips.shootSound;
-	}
+        timescaleText.text = ClearScore.ToString();
 
-	private void LateUpdate () {
+    }
+
+    private void LateUpdate () {
 		
 		//Weapon sway
 		if (weaponSway == true) 
@@ -261,35 +265,8 @@ public class AutomaticGunScriptLPFP : MonoBehaviour {
 
 		//Timescale settings
 		//Change timescale to normal when 1 key is pressed
-		if (Input.GetKeyDown (KeyCode.Alpha1)) 
-		{
-			Time.timeScale = 1.0f;
-			timescaleText.text = "1.0";
-		}
-		//Change timesccale to 50% when 2 key is pressed
-		if (Input.GetKeyDown (KeyCode.Alpha2)) 
-		{
-			Time.timeScale = 0.5f;
-			timescaleText.text = "0.5";
-		}
-		//Change timescale to 25% when 3 key is pressed
-		if (Input.GetKeyDown (KeyCode.Alpha3)) 
-		{
-			Time.timeScale = 0.25f;
-			timescaleText.text = "0.25";
-		}
-		//Change timescale to 10% when 4 key is pressed
-		if (Input.GetKeyDown (KeyCode.Alpha4)) 
-		{
-			Time.timeScale = 0.1f;
-			timescaleText.text = "0.1";
-		}
-		//Pause game when 5 key is pressed
-		if (Input.GetKeyDown (KeyCode.Alpha5)) 
-		{
-			Time.timeScale = 0.0f;
-			timescaleText.text = "0.0";
-		}
+		
+		
 
 		//Set current ammo text from ammo int
 		currentAmmoText.text = currentAmmo.ToString ();
@@ -504,11 +481,23 @@ public class AutomaticGunScriptLPFP : MonoBehaviour {
 
         //current score setting
         currentScoreText.text = currentScore.ToString();
-
+        if(currentScore >= ClearScore)
+        {
+            GameObject.Find("SceneManager").GetComponent<sceneManager>().gameClear = true;
+        }
         // timer countdown
         timer -= Time.deltaTime;
         float tmp = Mathf.Round(timer);
-        gameTimerText.text = tmp.ToString();
+        if(tmp <= 0)
+        {
+            gameTimerText.text = "0";
+            GameObject.Find("SceneManager").GetComponent<sceneManager>().gameOver = true;
+        }
+        else
+        {
+            gameTimerText.text = tmp.ToString();
+        }
+       
     }
     
     private IEnumerator GrenadeSpawnDelay () {

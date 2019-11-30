@@ -8,6 +8,7 @@ TagManager:
   - ExplosiveBarrel
   - Target
   - Star
+  - Map
   layers:
   - Default
   - TransparentFX
